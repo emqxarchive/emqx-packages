@@ -1,0 +1,3 @@
+shlibs:Depends=libc6 (>= 2.15), libssl1.0.0 (>= 1.0.1), libsystemd0, libtinfo5 (>= 6), zlib1g (>= 1:1.2.2)
+misc:Depends=
+misc:Pre-Depends=

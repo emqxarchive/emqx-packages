@@ -1,2 +1,2 @@
-# emu-package
+# emq-package
 EMQ RPM/Debian Packages
