@@ -59,18 +59,18 @@ install -m755 %{_topdir}/init.script  %{buildroot}%{_sysconfdir}/init.d/emqttd
 
 %pre
 # Pre-install script
-if ! getent group emqttd >/dev/null 2>&1; then
-	groupadd -r emqttd
+if ! getent group emqtt >/dev/null 2>&1; then
+	groupadd -r emqtt
 fi
 
-if getent passwd emqttd >/dev/null 2>&1; then
-	usermod -d %{_localstatedir}/lib/emqttd emqttd || true
+if getent passwd emqtt >/dev/null 2>&1; then
+	usermod -d %{_localstatedir}/lib/emqttd emqtt || true
 else
-    useradd -r -g emqttd \
-           --home %{_localstatedir}/lib/emqttd \
-           --comment "emqttd user" \
+    useradd -r -g emqtt \
+           --home %{_localstatedir}/lib/emqtt \
+           --comment "emqtt user" \
            --shell /bin/bash \
-           emqttd
+           emqtt
 fi
 
 %post 
@@ -78,8 +78,19 @@ if [ $1 == 1 ];then
 	/sbin/chkconfig --add emqttd 
 fi 
 
+%preun
+# Pre-uninstall script
+
+# Only on uninstall, not upgrades
+if [ "$1" = 0 ] ; then
+   /sbin/service emqttd stop > /dev/null 2>&1
+   /sbin/chkconfig --del emqttd
+fi
+exit 0
+
+
 %files
-%defattr(-,emqttd,emqttd)
+%defattr(-,emqtt,emqtt)
 /etc/ 
 /usr/ 
 /var/ 
