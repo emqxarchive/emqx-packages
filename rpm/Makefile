@@ -3,7 +3,6 @@ FINAL_OUTPUT_DIR=FINAL_RPMS
 TARBALL_DIR=dist
 TOP_DIR=$(shell pwd)
 DEFINES=--define '_topdir $(shell pwd)' --define '_tmppath $(shell pwd)/tmp' --define '_sysconfdir /etc' --define '_localstatedir /var'
-
 rpms:	clean package
 
 prepare:
@@ -22,5 +21,6 @@ package: prepare
 	mkdir ../package
 	cp -r RPMS/x86_64/* ../package
 	rm -rf BUILDROOT BUILD SOURCES SPECS SRPMS RPMS tmp $(FINAL_OUTPUT_DIR) dist emqttd-${EMQ_VERSION} emqttd-${EMQ_VERSION}.tar.gz
+
 clean:
 	rm -rf BUILDROOT BUILD SOURCES SPECS SRPMS RPMS tmp $(FINAL_OUTPUT_DIR) dist emqttd-${EMQ_VERSION} emqttd-${EMQ_VERSION}.tar.gz ../package

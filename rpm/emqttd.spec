@@ -25,20 +25,27 @@ make %{?_smp_mflags}
 %define relpath       %{_builddir}/%{buildsubdir}/_rel/emqttd
 %define buildroot_lib %{buildroot}%{_libdir}/emqttd
 %define buildroot_etc %{buildroot}%{_sysconfdir}/emqttd
+%define buildroot_bin %{buildroot_lib}/bin
 
 mkdir -p %{buildroot_etc}
 mkdir -p %{buildroot_lib}
 mkdir -p %{buildroot}%{_localstatedir}/lib/emqttd
 mkdir -p %{buildroot}%{_localstatedir}/log/emqttd
 mkdir -p %{buildroot}%{_localstatedir}/run/emqttd
-
+mkdir %{buildroot_bin}
 mkdir -p %{buildroot}/usr/sbin/
 
-cp -r %{relpath}/bin/* %{buildroot}/usr/sbin
+install -p -D -m 0755 %{relpath}/bin/emqttd %{buildroot}/usr/sbin
+install -p -D -m 0755 %{relpath}/bin/emqttd_ctl %{buildroot}/usr/sbin
 
-cp -R %{relpath}/lib       %{buildroot_lib}
-cp -R %{relpath}/erts-*    %{buildroot_lib}
-cp -R %{relpath}/releases  %{buildroot_lib}
+cp -R %{relpath}/lib           %{buildroot_lib}
+cp -R %{relpath}/erts-*        %{buildroot_lib}
+cp -R %{relpath}/releases      %{buildroot_lib}
+
+cp %{relpath}/bin/cuttlefish               %{buildroot_bin}
+cp %{relpath}/bin/install_upgrade_escript  %{buildroot_bin}
+cp %{relpath}/bin/nodetool                 %{buildroot_bin}
+cp %{relpath}/bin/start_clean.boot         %{buildroot_bin}
 
 cp -R %{relpath}/etc/* %{buildroot_etc}
 
@@ -48,7 +55,23 @@ cp -R %{relpath}/data/* %{buildroot}%{_localstatedir}/lib/emqttd
 
 mkdir -p %{buildroot}%{_sysconfdir}/init.d
 
-#install -m755 %{_topdir}/init.script  %{buildroot}%{_sysconfdir}/init.d/emqttd
+install -m755 %{_topdir}/init.script  %{buildroot}%{_sysconfdir}/init.d/emqttd
+
+%pre
+# Pre-install script
+if ! getent group emqttd >/dev/null 2>&1; then
+	groupadd -r emqttd
+fi
+
+if getent passwd emqttd >/dev/null 2>&1; then
+	usermod -d %{_localstatedir}/lib/emqttd emqttd || true
+else
+    useradd -r -g emqttd \
+           --home %{_localstatedir}/lib/emqttd \
+           --comment "emqttd user" \
+           --shell /bin/bash \
+           emqttd
+fi
 
 %post 
 if [ $1 == 1 ];then 
@@ -56,7 +79,7 @@ if [ $1 == 1 ];then
 fi 
 
 %files
-%defattr (-,root,root,0755)
+%defattr(-,emqttd,emqttd)
 /etc/ 
 /usr/ 
 /var/ 
