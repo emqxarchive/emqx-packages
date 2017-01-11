@@ -33,16 +33,28 @@ install: build
 	mkdir -p debian/emqttd/var/lib/emqttd
 	mkdir -p debian/emqttd/var/run/emqttd
 	mkdir -p debian/emqttd/var/log/emqttd
-	mkdir -p debian/emqttd/usr/sbin
-	mkdir -p debian/emqttd/etc/emqttd
 	
-	cp -R _rel/emqttd/bin/* debian/emqttd/usr/sbin	
+	mkdir -p debian/emqttd/usr/sbin
+	mkdir -p debian/emqttd/usr/lib/emqttd/bin
+	
+	mkdir -p debian/emqttd/etc/emqttd
+	mkdir -p debian/emqttd/etc/init.d
+	
+	install -p -D -m 0755 _rel/emqttd/bin/emqttd debian/emqttd/usr/sbin	
+	install -p -D -m 0755 _rel/emqttd/bin/emqttd_ctl debian/emqttd/usr/sbin
+	cp _rel/emqttd/bin/cuttlefish debian/emqttd/usr/lib/emqttd/bin
+	cp _rel/emqttd/bin/install_upgrade_escript debian/emqttd/usr/lib/emqttd/bin
+	cp _rel/emqttd/bin/nodetool debian/emqttd/usr/lib/emqttd/bin
+	cp _rel/emqttd/bin/start_clean.boot debian/emqttd/usr/lib/emqttd/bin
+	cp _rel/emqttd/bin/emqenv debian/emqttd/usr/lib/emqttd/bin
+	
 	cp -R _rel/emqttd/lib debian/emqttd/usr/lib/emqttd
 	cp -R _rel/emqttd/erts*  debian/emqttd/usr/lib/emqttd
 	cp -R _rel/emqttd/releases debian/emqttd/usr/lib/emqttd
 	cp -R _rel/emqttd/etc/* debian/emqttd/etc/emqttd
 	cp -R _rel/emqttd/data/*  debian/emqttd/var/lib/emqttd
-
+	install -m755 debian/init.script debian/emqttd/etc/init.d/emqttd
+	
 	dh_shlibdeps
 
 # We have nothing to do by default.

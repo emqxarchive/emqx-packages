@@ -5,8 +5,6 @@ Maintainer: emqtt <emqtt@emqtt.io>
 Build-Depends: debhelper (>=9)
 Standards-Version: 3.9.6
 Homepage: http://www.emqtt.io
-#Vcs-Git: git://anonscm.debian.org/collab-maint/emqttd.git
-#Vcs-Browser: https://anonscm.debian.org/cgit/collab-maint/emqttd.git
 
 Package: emqttd
 Architecture: any
