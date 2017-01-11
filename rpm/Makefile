@@ -7,7 +7,7 @@ rpms:	clean package
 
 prepare:
 	mkdir -p BUILD SOURCES SPECS SRPMS RPMS tmp dist emqttd-${EMQ_VERSION}
-	git clone -b ${EMQ_VERSION} https://github.com/emqtt/emq-relx.git emqttd-${EMQ_VERSION}
+	git clone -b package https://github.com/emqtt/emq-relx.git emqttd-${EMQ_VERSION}
 	cd emqttd-${EMQ_VERSION} && make
 	cd ../
 	tar -zcf emqttd-${EMQ_VERSION}.tar.gz emqttd-${EMQ_VERSION}
