@@ -40,7 +40,7 @@ do_start()
     # Startup with the appropriate user
     start-stop-daemon --start \
         --name emqttd \
-        --user emqttd \
+        --user emqtt \
         --exec $DAEMON -- start \
         || return 2
 }
@@ -65,7 +65,7 @@ do_stop()
     start-stop-daemon --stop \
                       --quiet \
                       --retry=TERM/30/KILL/5 \
-                      --user emqttd \
+                      --user emqtt \
                       --exec $ERTS_PATH/run_erl
     return $?
 }
