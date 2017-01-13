@@ -1,6 +1,6 @@
 %define __debug_install_post %{_rpmconfigdir}/find-debuginfo.sh %{?_find_debuginfo_opts} "%{_builddir}/%{?buildsubdir}" %{nil}
 Name:    emqttd		
-Version: 2.0.6	
+Version: 2.0.7	
 Release: 1%{?dist}
 Summary: emqttd	
 Group:	 System Environment/Daemons
