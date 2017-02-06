@@ -19,7 +19,7 @@ package: prepare
 	mkdir -p $(FINAL_OUTPUT_DIR)
 	rpmbuild -vv -bb --nodeps SPECS/emqttd.spec $(DEFINES)
 	mkdir ../package
-	cp -r RPMS/x86_64/* ../package
+	cp -r RPMS/x86_64/emqttd-${EMQ_VERSION}* ../package
 	rm -rf BUILDROOT BUILD SOURCES SPECS SRPMS RPMS tmp $(FINAL_OUTPUT_DIR) dist emqttd-${EMQ_VERSION} emqttd-${EMQ_VERSION}.tar.gz
 
 clean:
