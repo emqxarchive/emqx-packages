@@ -9,6 +9,7 @@ prepare:
 	mkdir -p BUILD SOURCES SPECS SRPMS RPMS tmp dist emqttd-${EMQ_VERSION}
 	git clone -b package https://github.com/emqtt/emq-relx.git emqttd-${EMQ_VERSION}
 	cd emqttd-${EMQ_VERSION} && make
+	rm -rf emqx-${EMQX_VERSION}/deps/gen_rpc/_build/
 	cd ../
 	tar -zcf emqttd-${EMQ_VERSION}.tar.gz emqttd-${EMQ_VERSION}
 	cp -R emqttd-${EMQ_VERSION} dist
