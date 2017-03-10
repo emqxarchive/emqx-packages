@@ -2,7 +2,7 @@ emq-package
 ===========
 
 EMQ RPM/Debian Packages
-NOTICE: Requires Erlang/OTP R18+ to build.
+NOTICE: Requires Erlang/OTP R19.1+ to build.
 
 Build on Linux Debian/Ubuntu
 ----------------------------
