@@ -6,7 +6,7 @@ Summary: emqttd
 Group:	 System Environment/Daemons
 License: Apache License Version 2.0
 URL:	 http://www.emqtt.io
-Source0:	%{name}-%{version}-rc.2.tar.gz
+Source0:	%{name}-%{version}.tar.gz
 BuildRoot:  %_topdir/BUILDROOT
 #BuildRequires: gcc,make	
 #Requires:	pcre,pcre-devel,openssl,chkconfig
