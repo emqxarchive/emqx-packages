@@ -1,12 +1,12 @@
 %define __debug_install_post %{_rpmconfigdir}/find-debuginfo.sh %{?_find_debuginfo_opts} "%{_builddir}/%{?buildsubdir}" %{nil}
 Name:    emqttd		
-Version: v2.1.0-rc.2
+Version: 2.1.0
 Release: 1%{?dist}
 Summary: emqttd	
 Group:	 System Environment/Daemons
 License: Apache License Version 2.0
 URL:	 http://www.emqtt.io
-Source0:	%{name}-%{version}.tar.gz
+Source0:	%{name}-%{version}-rc.2.tar.gz
 BuildRoot:  %_topdir/BUILDROOT
 #BuildRequires: gcc,make	
 #Requires:	pcre,pcre-devel,openssl,chkconfig
