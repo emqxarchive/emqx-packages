@@ -1,7 +1,7 @@
 export
 
 OS            = $(shell uname -s)
-EMQ_VERSION   = 2.1.1
+EMQ_VERSION   = 2.1.2
 ##
 ## Support RPM and Debian based linux systems
 ##
