@@ -6,6 +6,7 @@ After=network.target
 Type=forking
 Environment=HOME=/root
 ExecStart=/bin/sh emqttd start
+LimitNOFILE=1048576
 
 [Install]
 WantedBy=multi-user.target
