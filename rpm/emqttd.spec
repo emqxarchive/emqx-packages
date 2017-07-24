@@ -66,7 +66,7 @@ if getent passwd emqtt >/dev/null 2>&1; then
 	usermod -d %{_localstatedir}/lib/emqttd emqtt || true
 else
     useradd -r -g emqtt \
-           --home %{_localstatedir}/lib/emqtt \
+           --home %{_localstatedir}/lib/emqttd \
            --comment "emqtt user" \
            --shell /bin/bash \
            emqtt
