@@ -1,38 +1,38 @@
 #!/bin/sh
-# postinst script for emqttd
+# postinst script for emqx
 #
 # see: dh_installdeb(1)
 
 set -e
 
 # install startup script
-update-rc.d emqttd defaults >/dev/null
+update-rc.d emqx defaults >/dev/null
 
 # create group
-if ! getent group emqtt >/dev/null; then
-        addgroup --system emqtt
+if ! getent group emqx >/dev/null; then
+        addgroup --system emqx
 fi
 
 # create user
-if ! getent passwd emqtt >/dev/null; then
-        adduser --ingroup emqtt \
-                --home /var/lib/emqttd \
+if ! getent passwd emqx >/dev/null; then
+        adduser --ingroup emqx \
+                --home /var/lib/emqx \
                 --disabled-password \
                 --system --shell /bin/bash --no-create-home \
-                --gecos "emqttd user" emqtt
+                --gecos "emqx user" emqx
 fi
 
 for i in lib run log; do
-    chown -R emqtt:emqtt /var/$i/emqttd
+    chown -R emqx:emqx /var/$i/emqx
 done
 
-chown -R emqtt:emqtt /usr/lib/emqttd
-chown -R emqtt:emqtt /etc/emqttd
+chown -R emqx:emqx /usr/lib/emqx
+chown -R emqx:emqx /etc/emqx
 
-chmod 0755 /var/run/emqttd /etc/emqttd
-chmod 0644 /etc/emqttd/*
-chmod -R +X /etc/emqttd
-chmod 0755 /usr/lib/emqttd/bin/nodetool
+chmod 0755 /var/run/emqx /etc/emqx
+chmod 0644 /etc/emqx/*
+chmod -R +X /etc/emqx
+chmod 0755 /usr/lib/emqx/bin/nodetool
 
 case "$1" in
     configure)

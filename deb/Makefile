@@ -1,14 +1,14 @@
 deb: clean package
 
 prepare:
-	mkdir -p emqttd-${EMQ_VERSION} 
-	git clone -b package https://github.com/emqtt/emq-relx.git emqttd-${EMQ_VERSION}
-	cp debian -r emqttd-${EMQ_VERSION}/
-	cd emqttd-${EMQ_VERSION} && dpkg-buildpackage -us -uc && rm -rf ../debian && mv debian/ ../
+	mkdir -p emqx-${EMQX_VERSION} 
+	git clone -b xpackage git@github.com:emqx/emqx-rel.git emqx-${EMQX_VERSION}
+	cp debian -r emqx-${EMQX_VERSION}/
+	cd emqx-${EMQX_VERSION} && dpkg-buildpackage -us -uc && rm -rf ../debian && mv debian/ ../
 
 package: prepare
-	mkdir ../package
-	cp emqttd_${EMQ_VERSION}_amd64.deb ../package
-	rm -rf emqttd*
+	mkdir -p ../package
+	cp emqx_${EMQX_VERSION}_amd64.deb ../package
+	rm -rf emqx*
 clean:
-	rm -rf emqttd*
+	rm -rf emqx*

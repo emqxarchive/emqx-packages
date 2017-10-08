@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# emqttd
+# emqx
 #
 # chkconfig: 2345 80 30
 # description: (Erlang MQTT Broker) is a distributed, massively scalable, highly extensible MQTT message broker written in Erlang/OTP
@@ -13,7 +13,7 @@
 RETVAL=0
 PATH=/sbin:/usr/sbin:/bin:/usr/bin
 DESC="(Erlang MQTT Broker) is a distributed, massively scalable, highly extensible MQTT message broker written in Erlang/OTP"
-NAME=emqttd
+NAME=emqx
 DAEMON=/usr/sbin/$NAME
 lockfile=/var/lock/subsys/$NAME
 pidfile=/var/run/$NAME/$NAME.pid
@@ -49,7 +49,7 @@ check_pid_status() {
 
 start() {
     # Start daemons.
-    echo -n $"Starting emqttd: "
+    echo -n $"Starting emqx: "
     $DAEMON start
     RETVAL=$?
     if [ $RETVAL -eq 0 ]; then
@@ -64,7 +64,7 @@ start() {
 
 stop() {
     # Stop daemon.
-    echo -n $"Shutting down emqttd: "
+    echo -n $"Shutting down emqx: "
     $DAEMON stop 2>/dev/null
     for n in $(seq 1 10); do
         sleep 1

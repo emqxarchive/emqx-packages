@@ -1,5 +1,5 @@
-emqttd (2.3) unstable; urgency=medium
+emqx (2.4) unstable; urgency=medium
 
   * Initial Release.
 
- -- emqtt <emqtt@emqtt.io>  Fri, 06 Jan 2017 10:48:42 +0800
+ -- emqx <contact@emqtt.io>  Fri, 06 Jan 2017 10:48:42 +0800

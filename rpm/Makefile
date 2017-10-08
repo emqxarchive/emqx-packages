@@ -6,22 +6,22 @@ DEFINES=--define '_topdir $(shell pwd)' --define '_tmppath $(shell pwd)/tmp' --d
 rpms:	clean package
 
 prepare:
-	mkdir -p BUILD SOURCES SPECS SRPMS RPMS tmp dist emqttd-${EMQ_VERSION}
-	git clone -b package https://github.com/emqtt/emq-relx.git emqttd-${EMQ_VERSION}
-	cd emqttd-${EMQ_VERSION} && make
+	mkdir -p BUILD SOURCES SPECS SRPMS RPMS tmp dist emqx-${EMQX_VERSION}
+	git clone -b xpackage https://github.com/emqtt/emq-relx.git emqx-${EMQX_VERSION}
+	cd emqx-${EMQX_VERSION} && make
 	rm -rf emqx-${EMQX_VERSION}/deps/gen_rpc/_build/
 	cd ../
-	tar -zcf emqttd-${EMQ_VERSION}.tar.gz emqttd-${EMQ_VERSION}
-	cp -R emqttd-${EMQ_VERSION} dist
-	cp emqttd-${EMQ_VERSION}.tar.gz SOURCES
-	cp emqttd.spec SPECS
+	tar -zcf emqx-${EMQX_VERSION}.tar.gz emqx-${EMQX_VERSION}
+	cp -R emqx-${EMQX_VERSION} dist
+	cp emqx-${EMQX_VERSION}.tar.gz SOURCES
+	cp emqx.spec SPECS
 
 package: prepare
 	mkdir -p $(FINAL_OUTPUT_DIR)
-	rpmbuild -vv -bb --nodeps SPECS/emqttd.spec $(DEFINES)
-	mkdir ../package
-	cp -r RPMS/x86_64/emqttd-${EMQ_VERSION}* ../package
-	rm -rf BUILDROOT BUILD SOURCES SPECS SRPMS RPMS tmp $(FINAL_OUTPUT_DIR) dist emqttd-${EMQ_VERSION} emqttd-${EMQ_VERSION}.tar.gz
+	rpmbuild -vv -bb --nodeps SPECS/emqx.spec $(DEFINES)
+	mkdir -p ../package
+	cp -r RPMS/x86_64/emqx-${EMQX_VERSION}* ../package
+	rm -rf BUILDROOT BUILD SOURCES SPECS SRPMS RPMS tmp $(FINAL_OUTPUT_DIR) dist emqx-${EMQX_VERSION} emqx-${EMQX_VERSION}.tar.gz
 
 clean:
-	rm -rf BUILDROOT BUILD SOURCES SPECS SRPMS RPMS tmp $(FINAL_OUTPUT_DIR) dist emqttd-${EMQ_VERSION} emqttd-${EMQ_VERSION}.tar.gz ../package
+	rm -rf BUILDROOT BUILD SOURCES SPECS SRPMS RPMS tmp $(FINAL_OUTPUT_DIR) dist emqx-${EMQX_VERSION} emqx-${EMQX_VERSION}.tar.gz ../package

@@ -1,11 +1,11 @@
 [Unit]
-Description=emqtt daemon
+Description=emqx broker
 After=network.target
 
 [Service]
 Type=forking
 Environment=HOME=/root
-ExecStart=/bin/sh /usr/sbin/emqttd start
+ExecStart=/bin/sh /usr/sbin/emqx start
 LimitNOFILE=1048576
 
 [Install]

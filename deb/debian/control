@@ -1,12 +1,12 @@
-Source: emqttd
+Source: emqx
 Section: unknown
 Priority: optional
-Maintainer: emqtt <emqtt@emqtt.io>
+Maintainer: EMQ Enterprise, Inc.<contact@emqtt.io>
 Build-Depends: debhelper (>=9)
 Standards-Version: 3.9.6
 Homepage: http://www.emqtt.io
 
-Package: emqttd
+Package: emqx
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: Erlang MQTT Broker
+Description: EMQ X Broker
