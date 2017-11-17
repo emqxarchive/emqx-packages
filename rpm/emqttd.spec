@@ -54,7 +54,7 @@ mkdir -p %{buildroot}%{_localstatedir}/lib/emqttd
 cp -R %{relpath}/data/* %{buildroot}%{_localstatedir}/lib/emqttd
 
 command -v service >/dev/null 2>&1 || { mkdir -p %{buildroot}%{_unitdir}/; install -m755  %{_topdir}/emqttd.service %{buildroot}%{_unitdir}/; }
-command -v systemctl >/dev/null 2>&1 || { mkdir -p %{buildroot}%{_sysconfdir}/init.d; install -m755 %{_topdir}/init.script  %{buildroot}%{_sysconfdir}/init.d/emqttd; }
+command -v systemctl >/dev/null 2>&1 || { cp %{_topdir}/init.script %{buildroot}%{_localstatedir}/lib/emqttd/init.d; }
 
 %pre
 # Pre-install script
@@ -74,7 +74,12 @@ fi
 
 %post
 if [ $1 == 1 ];then
-    if [ -e /etc/init.d/emqttd ] ; then
+    chown -R emqtt:emqtt /var/log/emqttd/
+    chown -R emqtt:emqtt /var/lib/emqttd/
+    if [ -e /var/lib/emqttd/init.d  ] ; then
+        \cp -rf /var/lib/emqttd/init.d /etc/init.d/emqttd
+        chown root:root /etc/init.d/emqttd
+        chmod 755 /etc/init.d/emqttd
         sbin/chkconfig --add emqttd
     else
         systemctl enable emqttd.service
@@ -89,6 +94,7 @@ if [ "$1" = 0 ] ; then
     if [ -e /etc/init.d/emqttd ] ; then
         /sbin/service emqttd stop > /dev/null 2>&1
         /sbin/chkconfig --del emqttd
+        rm -rf /etc/init.d/emqttd
     else
         systemctl disable emqttd.service
     fi
@@ -96,7 +102,7 @@ fi
 exit 0
 
 %files
-%defattr(-,emqtt,emqtt)
+%defattr(-,root,root)
 /etc/ 
 /usr/ 
 /var/ 
