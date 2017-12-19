@@ -27,34 +27,32 @@ make %{?_smp_mflags}
 %define buildroot_etc %{buildroot}%{_sysconfdir}/emqttd
 %define buildroot_bin %{buildroot_lib}/bin
 
-mkdir -p %{buildroot_etc}
-mkdir -p %{buildroot_lib}
 mkdir -p %{buildroot}%{_localstatedir}/lib/emqttd
 mkdir -p %{buildroot}%{_localstatedir}/log/emqttd
 mkdir -p %{buildroot}%{_localstatedir}/run/emqttd
-mkdir %{buildroot_bin}
-mkdir -p %{buildroot}/usr/sbin/
+mkdir -p %{buildroot}%{_localstatedir}/lib/emqttd/lib
+mkdir -p %{buildroot}%{_localstatedir}/lib/emqttd/lib/bin
+mkdir -p %{buildroot}%{_localstatedir}/lib/emqttd/sbin
+mkdir -p %{buildroot}%{_localstatedir}/lib/emqttd/etc
 
-install -p -D -m 0755 %{relpath}/bin/emqttd %{buildroot}/usr/sbin
-install -p -D -m 0755 %{relpath}/bin/emqttd_ctl %{buildroot}/usr/sbin
+install -p -D -m 0755 %{relpath}/bin/emqttd %{buildroot}%{_localstatedir}/lib/emqttd/sbin
+install -p -D -m 0755 %{relpath}/bin/emqttd_ctl %{buildroot}%{_localstatedir}/lib/emqttd/sbin
 
-cp -R %{relpath}/lib           %{buildroot_lib}
-cp -R %{relpath}/erts-*        %{buildroot_lib}
-cp -R %{relpath}/releases      %{buildroot_lib}
+cp -R %{relpath}/lib           %{buildroot}%{_localstatedir}/lib/emqttd/lib
+cp -R %{relpath}/erts-*        %{buildroot}%{_localstatedir}/lib/emqttd/lib
+cp -R %{relpath}/releases      %{buildroot}%{_localstatedir}/lib/emqttd/lib
 
-cp %{relpath}/bin/cuttlefish               %{buildroot_bin}
-cp %{relpath}/bin/install_upgrade_escript  %{buildroot_bin}
-cp %{relpath}/bin/nodetool                 %{buildroot_bin}
-cp %{relpath}/bin/start_clean.boot         %{buildroot_bin}
+cp %{relpath}/bin/cuttlefish               %{buildroot}%{_localstatedir}/lib/emqttd/lib/bin
+cp %{relpath}/bin/install_upgrade_escript  %{buildroot}%{_localstatedir}/lib/emqttd/lib/bin
+cp %{relpath}/bin/nodetool                 %{buildroot}%{_localstatedir}/lib/emqttd/lib/bin
+cp %{relpath}/bin/start_clean.boot         %{buildroot}%{_localstatedir}/lib/emqttd/lib/bin
 
-cp -R %{relpath}/etc/* %{buildroot_etc}
-
-mkdir -p %{buildroot}%{_localstatedir}/lib/emqttd
+cp -R %{relpath}/etc/* %{buildroot}%{_localstatedir}/lib/emqttd/etc
 
 cp -R %{relpath}/data/* %{buildroot}%{_localstatedir}/lib/emqttd
 
-command -v service >/dev/null 2>&1 || { mkdir -p %{buildroot}%{_unitdir}/; install -m755  %{_topdir}/emqttd.service %{buildroot}%{_unitdir}/; }
-command -v systemctl >/dev/null 2>&1 || { cp %{_topdir}/init.script %{buildroot}%{_localstatedir}/lib/emqttd/init.d; }
+command -v service >/dev/null 2>&1 || { install -m755  %{_topdir}/emqttd.service %{buildroot}%{_localstatedir}/lib/emqttd/; }
+command -v systemctl >/dev/null 2>&1 || { install -m755 %{_topdir}/init.script %{buildroot}%{_localstatedir}/lib/emqttd/; }
 
 %pre
 # Pre-install script
@@ -76,12 +74,18 @@ fi
 if [ $1 == 1 ];then
     chown -R emqtt:emqtt /var/log/emqttd/
     chown -R emqtt:emqtt /var/lib/emqttd/
+    mkdir /usr/lib64/emqttd
+    mkdir /etc/emqttd
+    \cp -rf /var/lib/emqttd/etc/* /etc/emqttd/
+    \cp -rf /var/lib/emqttd/sbin/* /usr/sbin/
+    \cp -rf /var/lib/emqttd/lib/* /usr/lib64/emqttd/
+
     if [ -e /var/lib/emqttd/init.d  ] ; then
         \cp -rf /var/lib/emqttd/init.d /etc/init.d/emqttd
         chown root:root /etc/init.d/emqttd
-        chmod 755 /etc/init.d/emqttd
         sbin/chkconfig --add emqttd
     else
+	\cp -rf /var/lib/emqttd/emqttd.service /usr/lib/systemd/system/emqttd.service
         systemctl enable emqttd.service
     fi
 fi
@@ -98,13 +102,16 @@ if [ "$1" = 0 ] ; then
     else
         systemctl disable emqttd.service
     fi
+    rm -rf /etc/emqttd/
+    rm -rf /usr/lib64/emqttd/
+    rm -rf /usr/sbin/emqttd
+    rm -rf /usr/sbin/emqttd_ctl
+
 fi
 exit 0
 
 %files
 %defattr(-,root,root)
-/etc/ 
-/usr/ 
 /var/ 
 %doc
 
