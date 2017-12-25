@@ -1,5 +1,5 @@
 %define __debug_install_post %{_rpmconfigdir}/find-debuginfo.sh %{?_find_debuginfo_opts} "%{_builddir}/%{?buildsubdir}" %{nil}
-Name:    emqttd		
+Name:    emqttd
 Version: 2.3
 Release: 1%{?dist}
 Summary: emqttd	
