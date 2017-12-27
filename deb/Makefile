@@ -8,7 +8,7 @@ prepare:
 
 package: prepare
 	mkdir ../package
-	cp emqttd_${EMQ_VERSION}_amd64.deb ../package
+	cp emqttd_${EMQ_VERSION}_*.deb ../package
 	rm -rf emqttd*
 clean:
 	rm -rf emqttd*
