@@ -7,6 +7,7 @@ Type=forking
 Environment=HOME=/root
 ExecStart=/bin/sh /usr/sbin/emqttd start
 LimitNOFILE=1048576
+ExecStop=/bin/sh /usr/sbin/emqttd stop
 
 [Install]
 WantedBy=multi-user.target
