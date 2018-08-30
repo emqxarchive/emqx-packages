@@ -1,6 +1,6 @@
 #! /bin/bash
 ### BEGIN INIT INFO
-# Provides:          emqttd
+# Provides:          emqx
 # Required-Start:    $remote_fs $syslog
 # Required-Stop:     $remote_fs $syslog
 # Default-Start:     2 3 4 5
@@ -9,7 +9,7 @@
 # Description:       (Erlang MQTT Broker) is a distributed, massively scalable, highly extensible MQTT message broker written in Erlang/OTP
 ### END INIT INFO
 
-NAME=emqttd
+NAME=emqx
 DAEMON=/usr/sbin/$NAME
 SCRIPTNAME=/etc/init.d/$NAME
 
@@ -24,7 +24,7 @@ SCRIPTNAME=/etc/init.d/$NAME
 # if no HOME was set in /etc/default/$NAME then set one here
 # to the data directory for erlexec's sake
 if [ -z "$HOME" ]; then
-    export HOME=/var/lib/emqttd
+    export HOME=/var/lib/emqx
 fi
 
 #
@@ -39,8 +39,8 @@ do_start()
 
     # Startup with the appropriate user
     start-stop-daemon --start \
-        --name emqttd \
-        --user emqtt \
+        --name emqx \
+        --user emqx \
         --exec $DAEMON -- start \
         || return 2
 }
@@ -68,7 +68,7 @@ do_stop()
     start-stop-daemon --stop \
                       --quiet \
                       --retry=TERM/30/KILL/5 \
-                      --user emqtt \
+                      --user emqx \
                       --exec $ERTS_PATH/run_erl
     return $?
 }

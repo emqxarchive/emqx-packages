@@ -1,13 +1,13 @@
 [Unit]
-Description=emqtt daemon
+Description=emqx daemon
 After=network.target
 
 [Service]
 Type=forking
 Environment=HOME=/root
-ExecStart=/bin/sh /usr/sbin/emqttd start
+ExecStart=/bin/sh /usr/sbin/emqx start
 LimitNOFILE=1048576
-ExecStop=/bin/sh /usr/sbin/emqttd stop
+ExecStop=/bin/sh /usr/sbin/emqx stop
 
 [Install]
 WantedBy=multi-user.target

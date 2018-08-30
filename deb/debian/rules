@@ -29,31 +29,31 @@ install: build
 	dh_testroot
 	dh_prep
 	dh_installdirs
-	mkdir -p debian/emqttd/usr/lib/emqttd	
-	mkdir -p debian/emqttd/var/lib/emqttd
-	mkdir -p debian/emqttd/var/run/emqttd
-	mkdir -p debian/emqttd/var/log/emqttd
+	mkdir -p debian/emqx/usr/lib/emqx
+	mkdir -p debian/emqx/var/lib/emqx
+	mkdir -p debian/emqx/var/run/emqx
+	mkdir -p debian/emqx/var/log/emqx
 	
-	mkdir -p debian/emqttd/usr/sbin
-	mkdir -p debian/emqttd/usr/lib/emqttd/bin
+	mkdir -p debian/emqx/usr/sbin
+	mkdir -p debian/emqx/usr/lib/emqx/bin
 	
-	mkdir -p debian/emqttd/etc/emqttd
-	mkdir -p debian/emqttd/etc/init.d
+	mkdir -p debian/emqx/etc/emqx
+	mkdir -p debian/emqx/etc/init.d
 	
-	install -p -D -m 0755 _rel/emqttd/bin/emqttd debian/emqttd/usr/sbin	
-	install -p -D -m 0755 _rel/emqttd/bin/emqttd_ctl debian/emqttd/usr/sbin
-	cp _rel/emqttd/bin/cuttlefish debian/emqttd/usr/lib/emqttd/bin
-	cp _rel/emqttd/bin/install_upgrade_escript debian/emqttd/usr/lib/emqttd/bin
-	cp _rel/emqttd/bin/nodetool debian/emqttd/usr/lib/emqttd/bin
-	cp _rel/emqttd/bin/start_clean.boot debian/emqttd/usr/lib/emqttd/bin
-	cp _rel/emqttd/bin/emqenv debian/emqttd/usr/lib/emqttd/bin
+	install -p -D -m 0755 _rel/emqx/bin/emqx debian/emqx/usr/sbin
+	install -p -D -m 0755 _rel/emqx/bin/emqx_ctl debian/emqx/usr/sbin
+	cp _rel/emqx/bin/cuttlefish debian/emqx/usr/lib/emqx/bin
+	cp _rel/emqx/bin/install_upgrade_escript debian/emqx/usr/lib/emqx/bin
+	cp _rel/emqx/bin/nodetool debian/emqx/usr/lib/emqx/bin
+	cp _rel/emqx/bin/start_clean.boot debian/emqx/usr/lib/emqx/bin
+	cp _rel/emqx/bin/emqenv debian/emqx/usr/lib/emqx/bin
 	
-	cp -R _rel/emqttd/lib debian/emqttd/usr/lib/emqttd
-	cp -R _rel/emqttd/erts*  debian/emqttd/usr/lib/emqttd
-	cp -R _rel/emqttd/releases debian/emqttd/usr/lib/emqttd
-	cp -R _rel/emqttd/etc/* debian/emqttd/etc/emqttd
-	cp -R _rel/emqttd/data/*  debian/emqttd/var/lib/emqttd
-	install -m755 debian/init.script debian/emqttd/etc/init.d/emqttd
+	cp -R _rel/emqx/lib debian/emqx/usr/lib/emqx
+	cp -R _rel/emqx/erts*  debian/emqx/usr/lib/emqx
+	cp -R _rel/emqx/releases debian/emqx/usr/lib/emqx
+	cp -R _rel/emqx/etc/* debian/emqx/etc/emqx
+	cp -R _rel/emqx/data/*  debian/emqx/var/lib/emqx
+	install -m755 debian/init.script debian/emqx/etc/init.d/emqx
 	
 	dh_shlibdeps
 

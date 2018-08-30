@@ -1,5 +1,5 @@
 #!/bin/sh
-# postrm script for emqttd
+# postrm script for emqx
 #
 # see: dh_installdeb(1)
 
@@ -21,33 +21,33 @@ set -e
 
 case "$1" in
     purge)
-        rm -f /etc/default/emqttd
+        rm -f /etc/default/emqx
 
         # ensure we remove the rc.d scripts installed by postinst
-        update-rc.d emqttd remove >/dev/null
+        update-rc.d emqx remove >/dev/null
 
-        if [ -d /var/lib/emqttd ]; then
-                rm -r /var/lib/emqttd
+        if [ -d /var/lib/emqx ]; then
+                rm -r /var/lib/emqx
         fi
-        if [ -d /var/log/emqttd ]; then
-                rm -r /var/log/emqttd
+        if [ -d /var/log/emqx ]; then
+                rm -r /var/log/emqx
         fi
-        if [ -d /var/run/emqttd ]; then
-                rm -r /var/run/emqttd
+        if [ -d /var/run/emqx ]; then
+                rm -r /var/run/emqx
         fi
-        if [ -d /etc/emqttd ]; then
-                rm -r /etc/emqttd
+        if [ -d /etc/emqx ]; then
+                rm -r /etc/emqx
         fi
-        if [ -e /etc/init.d/emqttd ]; then
-                rm  /etc/init.d/emqttd
+        if [ -e /etc/init.d/emqx ]; then
+                rm  /etc/init.d/emqx
         fi
         # Remove User & Group, killing any process owned by them
-        if getent passwd emqtt >/dev/null; then
-                pkill -u emqtt || true
-                deluser --quiet --system emqtt
+        if getent passwd emqx >/dev/null; then
+                pkill -u emqx || true
+                deluser --quiet --system emqx
         fi
-        if getent group emqtt >/dev/null; then
-                delgroup --quiet --system --only-if-empty emqtt || true
+        if getent group emqx >/dev/null; then
+                delgroup --quiet --system --only-if-empty emqx || true
         fi
     ;;
 
