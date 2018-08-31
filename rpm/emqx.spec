@@ -46,6 +46,7 @@ cp %{relpath}/bin/cuttlefish               %{buildroot}%{_localstatedir}/lib/emq
 cp %{relpath}/bin/install_upgrade_escript  %{buildroot}%{_localstatedir}/lib/emqx/emqx/lib/bin
 cp %{relpath}/bin/nodetool                 %{buildroot}%{_localstatedir}/lib/emqx/emqx/lib/bin
 cp %{relpath}/bin/start_clean.boot         %{buildroot}%{_localstatedir}/lib/emqx/emqx/lib/bin
+cp %{relpath}/bin/no_dot_erlang.boot       %{buildroot}%{_localstatedir}/lib/emqx/emqx/lib/bin
 
 cp -R %{relpath}/etc/* %{buildroot}%{_localstatedir}/lib/emqx/emqx/etc
 
