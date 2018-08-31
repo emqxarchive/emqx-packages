@@ -50,6 +50,7 @@ cp %{relpath}/bin/start_clean.boot         %{buildroot}%{_localstatedir}/lib/emq
 cp -R %{relpath}/etc/* %{buildroot}%{_localstatedir}/lib/emqx/emqx/etc
 
 cp -R %{relpath}/data/* %{buildroot}%{_localstatedir}/lib/emqx
+cp -R %{relpath}/plugins %{buildroot}%{_localstatedir}/lib/emqx
 
 command -v service >/dev/null 2>&1 || { install -m755  %{_topdir}/emqx.service %{buildroot}%{_localstatedir}/lib/emqx/emqx/; }
 command -v systemctl >/dev/null 2>&1 || { install -m755 %{_topdir}/init.script %{buildroot}%{_localstatedir}/lib/emqx/emqx/; }
