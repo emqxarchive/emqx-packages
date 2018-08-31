@@ -54,7 +54,6 @@ install: build
 	cp -R _rel/emqx/releases debian/emqx/usr/lib/emqx
 	cp -R _rel/emqx/etc/* debian/emqx/etc/emqx
 	cp -R _rel/emqx/data/*  debian/emqx/var/lib/emqx
-	cp -R _rel/emqx/plugins  debian/emqx/var/lib/emqx
 	install -m755 debian/init.script debian/emqx/etc/init.d/emqx
 	
 	dh_shlibdeps
