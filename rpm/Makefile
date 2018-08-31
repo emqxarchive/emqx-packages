@@ -7,7 +7,7 @@ rpms:	clean package
 
 prepare:
 	mkdir -p BUILD SOURCES SPECS SRPMS RPMS tmp dist emqx-${EMQ_VERSION}
-	git clone -b emqx30_package https://github.com/emqtt/emq-relx.git emqx-${EMQ_VERSION}
+	git clone -b emqx30_package https://github.com/emqx/emqx-rel emqx-${EMQ_VERSION}
 	cd emqx-${EMQ_VERSION} && make
 	rm -rf emqx-${EMQX_VERSION}/deps/gen_rpc/_build/
 	cd ../

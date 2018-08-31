@@ -2,7 +2,7 @@ deb: clean package
 
 prepare:
 	mkdir -p emqx-${EMQ_VERSION}
-	git clone -b emqx30_package https://github.com/emqtt/emq-relx.git emqx-${EMQ_VERSION}
+	git clone -b emqx30_package https://github.com/emqx/emqx-rel emqx-${EMQ_VERSION}
 	cp debian -r emqx-${EMQ_VERSION}/
 	cd emqx-${EMQ_VERSION} && dpkg-buildpackage -us -uc && rm -rf ../debian && mv debian/ ../
 
