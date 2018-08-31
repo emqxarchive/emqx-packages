@@ -46,7 +46,7 @@ install: build
 	cp _rel/emqx/bin/install_upgrade_escript debian/emqx/usr/lib/emqx/bin
 	cp _rel/emqx/bin/nodetool debian/emqx/usr/lib/emqx/bin
 	cp _rel/emqx/bin/start_clean.boot debian/emqx/usr/lib/emqx/bin
-	cp _rel/emqx/bin/emqenv debian/emqx/usr/lib/emqx/bin
+	cp _rel/emqx/bin/emqxenv debian/emqx/usr/lib/emqx/bin
 	
 	cp -R _rel/emqx/lib debian/emqx/usr/lib/emqx
 	cp -R _rel/emqx/erts*  debian/emqx/usr/lib/emqx
