@@ -20,7 +20,11 @@ package: prepare
 	mkdir -p $(FINAL_OUTPUT_DIR)
 	rpmbuild -vv -bb --nodeps SPECS/emqx.spec $(DEFINES)
 	mkdir ../package
-	cp -r RPMS/x86_64/emqx-${EMQ_VERSION}* ../package
+
+	file=$$(basename RPMS/x86_64/emqx-${EMQ_VERSION}*); \
+	extension=$${file##*.};\
+	uname=$$(uname -m);\
+	cp RPMS/x86_64/$${file} ../package/emqx-3.0.$${uname}.$${extension}
 	rm -rf BUILDROOT BUILD SOURCES SPECS SRPMS RPMS tmp $(FINAL_OUTPUT_DIR) dist emqx-${EMQ_VERSION} emqx-${EMQ_VERSION}.tar.gz
 
 clean:
