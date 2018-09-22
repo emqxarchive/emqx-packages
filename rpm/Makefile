@@ -24,7 +24,7 @@ package: prepare
 	file=$$(basename RPMS/x86_64/emqx-${EMQ_VERSION}*); \
 	extension=$${file##*.};\
 	uname=$$(uname -m);\
-	cp RPMS/x86_64/$${file} ../package/emqx-3.0.$${uname}.$${extension}
+	cp RPMS/x86_64/$${file} ../package/emqx-$${versionid}.$${uname}.$${extension}
 	rm -rf BUILDROOT BUILD SOURCES SPECS SRPMS RPMS tmp $(FINAL_OUTPUT_DIR) dist emqx-${EMQ_VERSION} emqx-${EMQ_VERSION}.tar.gz
 
 clean:
