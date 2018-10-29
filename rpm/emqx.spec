@@ -103,6 +103,7 @@ if [ "$1" = 0 ] ; then
         rm -rf /etc/init.d/emqx
     else
         systemctl disable emqx.service
+        rm -rf /usr/lib/systemd/system/emqx.service
     fi
     rm -rf /etc/emqx/
     rm -rf /usr/lib64/emqx/

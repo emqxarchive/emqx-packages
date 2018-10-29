@@ -1,7 +1,8 @@
 export
 
 OS            = $(shell uname -s)
-EMQ_VERSION   = 3.0
+EMQX_VERSION  = 3.0
+REL_TAG       = emqx30-package
 ##
 ## Support RPM and Debian based linux systems
 ##
@@ -32,7 +33,7 @@ endif  # linux
 .PHONY: ostype
 
 ## Call platform dependent makefile
-ostype: 
+ostype:clean
 	$(if $(PKGERDIR),,$(error "Operating system '$(OS)' not supported by emq_package"))
 	cd $(PKGERDIR) && $(MAKE)
 
