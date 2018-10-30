@@ -2,7 +2,7 @@ export
 
 OS            = $(shell uname -s)
 EMQX_VERSION  = 3.0
-REL_TAG       = emqx30-package
+REL_TAG       = emqx30_package
 ##
 ## Support RPM and Debian based linux systems
 ##
