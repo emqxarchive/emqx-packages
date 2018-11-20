@@ -52,8 +52,11 @@ cp -R %{relpath}/etc/* %{buildroot}%{_localstatedir}/lib/emqx/emqx/etc
 
 cp -R %{relpath}/data/* %{buildroot}%{_localstatedir}/lib/emqx
 
-command -v service >/dev/null 2>&1 || { install -m755  %{_topdir}/emqx.service %{buildroot}%{_localstatedir}/lib/emqx/emqx/; }
-command -v systemctl >/dev/null 2>&1 || { install -m755 %{_topdir}/init.script %{buildroot}%{_localstatedir}/lib/emqx/emqx/; }
+if command -v systemctl >/dev/null 2>&1; then
+    install -m755  %{_topdir}/emqx.service %{buildroot}%{_localstatedir}/lib/emqx/emqx/
+else
+    install -m755 %{_topdir}/init.script %{buildroot}%{_localstatedir}/lib/emqx/emqx/
+fi
 
 %pre
 # Pre-install script
