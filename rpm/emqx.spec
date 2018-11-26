@@ -32,11 +32,11 @@ mkdir -p %{buildroot}%{_localstatedir}/log/emqx
 mkdir -p %{buildroot}%{_localstatedir}/run/emqx
 mkdir -p %{buildroot}%{_localstatedir}/lib/emqx/emqx/lib
 mkdir -p %{buildroot}%{_localstatedir}/lib/emqx/emqx/lib/bin
-mkdir -p %{buildroot}%{_localstatedir}/lib/emqx/emqx/sbin
+mkdir -p %{buildroot}%{_localstatedir}/lib/emqx/emqx/bin
 mkdir -p %{buildroot}%{_localstatedir}/lib/emqx/emqx/etc
 
-install -p -D -m 0755 %{relpath}/bin/emqx %{buildroot}%{_localstatedir}/lib/emqx/emqx/sbin
-install -p -D -m 0755 %{relpath}/bin/emqx_ctl %{buildroot}%{_localstatedir}/lib/emqx/emqx/sbin
+install -p -D -m 0755 %{relpath}/bin/emqx %{buildroot}%{_localstatedir}/lib/emqx/emqx/bin
+install -p -D -m 0755 %{relpath}/bin/emqx_ctl %{buildroot}%{_localstatedir}/lib/emqx/emqx/bin
 
 cp -R %{relpath}/lib           %{buildroot}%{_localstatedir}/lib/emqx/emqx/lib
 cp -R %{relpath}/erts-*        %{buildroot}%{_localstatedir}/lib/emqx/emqx/lib
@@ -79,7 +79,7 @@ if [ $1 == 1 ];then
     mkdir /usr/lib64/emqx
     mkdir /etc/emqx
     \cp -rf /var/lib/emqx/emqx/etc/* /etc/emqx/
-    \cp -rf /var/lib/emqx/emqx/sbin/* /usr/sbin/
+    \cp -rf /var/lib/emqx/emqx/bin/* /usr/bin/
     \cp -rf /var/lib/emqx/emqx/lib/* /usr/lib64/emqx/
 
     if [ -e /var/lib/emqx/emqx/init.script ] ; then
@@ -110,8 +110,8 @@ if [ "$1" = 0 ] ; then
     fi
     rm -rf /etc/emqx/
     rm -rf /usr/lib64/emqx/
-    rm -rf /usr/sbin/emqx
-    rm -rf /usr/sbin/emqx_ctl
+    rm -rf /usr/bin/emqx
+    rm -rf /usr/bin/emqx_ctl
 
 fi
 exit 0

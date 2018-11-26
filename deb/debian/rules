@@ -34,14 +34,14 @@ install: build
 	mkdir -p debian/emqx/var/run/emqx
 	mkdir -p debian/emqx/var/log/emqx
 	
-	mkdir -p debian/emqx/usr/sbin
+	mkdir -p debian/emqx/usr/bin
 	mkdir -p debian/emqx/usr/lib/emqx/bin
 	
 	mkdir -p debian/emqx/etc/emqx
 	mkdir -p debian/emqx/etc/init.d
 	
-	install -p -D -m 0755 _rel/emqx/bin/emqx debian/emqx/usr/sbin
-	install -p -D -m 0755 _rel/emqx/bin/emqx_ctl debian/emqx/usr/sbin
+	install -p -D -m 0755 _rel/emqx/bin/emqx debian/emqx/usr/bin
+	install -p -D -m 0755 _rel/emqx/bin/emqx_ctl debian/emqx/usr/bin
 	cp _rel/emqx/bin/cuttlefish debian/emqx/usr/lib/emqx/bin
 	cp _rel/emqx/bin/install_upgrade_escript debian/emqx/usr/lib/emqx/bin
 	cp _rel/emqx/bin/nodetool debian/emqx/usr/lib/emqx/bin
