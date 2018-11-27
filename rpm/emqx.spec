@@ -32,21 +32,17 @@ mkdir -p %{buildroot}%{_localstatedir}/log/emqx
 mkdir -p %{buildroot}%{_localstatedir}/run/emqx
 mkdir -p %{buildroot}%{_localstatedir}/lib/emqx/emqx/lib
 mkdir -p %{buildroot}%{_localstatedir}/lib/emqx/emqx/lib/bin
-mkdir -p %{buildroot}%{_localstatedir}/lib/emqx/emqx/bin
+#mkdir -p %{buildroot}%{_localstatedir}/lib/emqx/emqx/bin
 mkdir -p %{buildroot}%{_localstatedir}/lib/emqx/emqx/etc
 
-install -p -D -m 0755 %{relpath}/bin/emqx %{buildroot}%{_localstatedir}/lib/emqx/emqx/bin
-install -p -D -m 0755 %{relpath}/bin/emqx_ctl %{buildroot}%{_localstatedir}/lib/emqx/emqx/bin
+#install -p -D -m 0755 %{relpath}/bin/emqx %{buildroot}%{_localstatedir}/lib/emqx/emqx/bin
+#install -p -D -m 0755 %{relpath}/bin/emqx_ctl %{buildroot}%{_localstatedir}/lib/emqx/emqx/bin
 
 cp -R %{relpath}/lib           %{buildroot}%{_localstatedir}/lib/emqx/emqx/lib
 cp -R %{relpath}/erts-*        %{buildroot}%{_localstatedir}/lib/emqx/emqx/lib
 cp -R %{relpath}/releases      %{buildroot}%{_localstatedir}/lib/emqx/emqx/lib
 
-cp %{relpath}/bin/cuttlefish               %{buildroot}%{_localstatedir}/lib/emqx/emqx/lib/bin
-cp %{relpath}/bin/install_upgrade_escript  %{buildroot}%{_localstatedir}/lib/emqx/emqx/lib/bin
-cp %{relpath}/bin/nodetool                 %{buildroot}%{_localstatedir}/lib/emqx/emqx/lib/bin
-cp %{relpath}/bin/start_clean.boot         %{buildroot}%{_localstatedir}/lib/emqx/emqx/lib/bin
-cp %{relpath}/bin/no_dot_erlang.boot       %{buildroot}%{_localstatedir}/lib/emqx/emqx/lib/bin
+cp %{relpath}/bin/*            %{buildroot}%{_localstatedir}/lib/emqx/emqx/lib/bin
 
 cp -R %{relpath}/etc/* %{buildroot}%{_localstatedir}/lib/emqx/emqx/etc
 
@@ -79,8 +75,9 @@ if [ $1 == 1 ];then
     mkdir /usr/lib64/emqx
     mkdir /etc/emqx
     \cp -rf /var/lib/emqx/emqx/etc/* /etc/emqx/
-    \cp -rf /var/lib/emqx/emqx/bin/* /usr/bin/
     \cp -rf /var/lib/emqx/emqx/lib/* /usr/lib64/emqx/
+    ln -s /usr/lib64/emqx/bin/emqx /usr/bin/emqx
+    ln -s /usr/lib64/emqx/bin/emqx_ctl /usr/bin/emqx_ctl
 
     if [ -e /var/lib/emqx/emqx/init.script ] ; then
         \cp -rf /var/lib/emqx/emqx/init.script /etc/init.d/emqx

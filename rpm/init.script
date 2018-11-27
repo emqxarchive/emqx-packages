@@ -14,7 +14,7 @@ RETVAL=0
 PATH=/sbin:/usr/sbin:/bin:/usr/bin
 DESC="(Erlang MQTT Broker) is a distributed, massively scalable, highly extensible MQTT message broker written in Erlang/OTP"
 NAME=emqx
-DAEMON=/usr/sbin/$NAME
+DAEMON=/usr/bin/$NAME
 lockfile=/var/lock/subsys/$NAME
 pidfile=/var/run/$NAME/$NAME.pid
 
