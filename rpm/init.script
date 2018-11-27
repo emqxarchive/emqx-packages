@@ -19,7 +19,7 @@ lockfile=/var/lock/subsys/$NAME
 pidfile=/var/run/$NAME/$NAME.pid
 
 # Check for script, config and data dirs
-[ -x /usr/sbin/$NAME ] || exit 0
+[ -x /usr/bin/$NAME ] || exit 0
 [ -d /etc/$NAME ] || exit 0
 [ -d /var/lib/$NAME ] || exit 0
 
