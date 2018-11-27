@@ -32,21 +32,17 @@ mkdir -p %{buildroot}%{_localstatedir}/log/emqx
 mkdir -p %{buildroot}%{_localstatedir}/run/emqx
 mkdir -p %{buildroot}%{_localstatedir}/lib/emqx/emqx/lib
 mkdir -p %{buildroot}%{_localstatedir}/lib/emqx/emqx/lib/bin
-#mkdir -p %{buildroot}%{_localstatedir}/lib/emqx/emqx/bin
 mkdir -p %{buildroot}%{_localstatedir}/lib/emqx/emqx/etc
 
-#install -p -D -m 0755 %{relpath}/bin/emqx %{buildroot}%{_localstatedir}/lib/emqx/emqx/bin
-#install -p -D -m 0755 %{relpath}/bin/emqx_ctl %{buildroot}%{_localstatedir}/lib/emqx/emqx/bin
+cp -R %{relpath}/lib      %{buildroot}%{_localstatedir}/lib/emqx/emqx/lib
+cp -R %{relpath}/erts-*   %{buildroot}%{_localstatedir}/lib/emqx/emqx/lib
+cp -R %{relpath}/releases %{buildroot}%{_localstatedir}/lib/emqx/emqx/lib
 
-cp -R %{relpath}/lib           %{buildroot}%{_localstatedir}/lib/emqx/emqx/lib
-cp -R %{relpath}/erts-*        %{buildroot}%{_localstatedir}/lib/emqx/emqx/lib
-cp -R %{relpath}/releases      %{buildroot}%{_localstatedir}/lib/emqx/emqx/lib
+cp %{relpath}/bin/*       %{buildroot}%{_localstatedir}/lib/emqx/emqx/lib/bin
 
-cp %{relpath}/bin/*            %{buildroot}%{_localstatedir}/lib/emqx/emqx/lib/bin
+cp -R %{relpath}/etc/*    %{buildroot}%{_localstatedir}/lib/emqx/emqx/etc
 
-cp -R %{relpath}/etc/* %{buildroot}%{_localstatedir}/lib/emqx/emqx/etc
-
-cp -R %{relpath}/data/* %{buildroot}%{_localstatedir}/lib/emqx
+cp -R %{relpath}/data/*   %{buildroot}%{_localstatedir}/lib/emqx
 
 if command -v systemctl >/dev/null 2>&1; then
     install -m755  %{_topdir}/emqx.service %{buildroot}%{_localstatedir}/lib/emqx/emqx/
@@ -105,7 +101,6 @@ if [ "$1" = 0 ] ; then
         systemctl disable emqx.service
         rm -rf /usr/lib/systemd/system/emqx.service
     fi
-    rm -rf /etc/emqx/
     rm -rf /usr/lib/emqx/
     rm -rf /usr/bin/emqx
     rm -rf /usr/bin/emqx_ctl
