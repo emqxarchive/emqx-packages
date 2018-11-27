@@ -49,6 +49,8 @@ case "$1" in
         if getent group emqx >/dev/null; then
                 delgroup --quiet --system --only-if-empty emqx || true
         fi
+        rm /usr/bin/emqx
+        rm /usr/bin/emqx_ctl
     ;;
 
     remove|upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)
