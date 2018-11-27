@@ -96,14 +96,14 @@ if [ "$1" = 0 ] ; then
     if [ -e /etc/init.d/emqx ] ; then
         /sbin/service emqx stop > /dev/null 2>&1
         /sbin/chkconfig --del emqx
-        rm -rf /etc/init.d/emqx
+        rm -f /etc/init.d/emqx
     else
         systemctl disable emqx.service
-        rm -rf /usr/lib/systemd/system/emqx.service
+        rm -f /usr/lib/systemd/system/emqx.service
     fi
     rm -rf /usr/lib/emqx/
-    rm -rf /usr/bin/emqx
-    rm -rf /usr/bin/emqx_ctl
+    rm -f /usr/bin/emqx
+    rm -f /usr/bin/emqx_ctl
 
 fi
 exit 0
