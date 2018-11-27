@@ -72,12 +72,12 @@ fi
 
 %post
 if [ $1 == 1 ];then
-    mkdir /usr/lib64/emqx
+    mkdir /usr/lib/emqx
     mkdir /etc/emqx
     \cp -rf /var/lib/emqx/emqx/etc/* /etc/emqx/
-    \cp -rf /var/lib/emqx/emqx/lib/* /usr/lib64/emqx/
-    ln -s /usr/lib64/emqx/bin/emqx /usr/bin/emqx
-    ln -s /usr/lib64/emqx/bin/emqx_ctl /usr/bin/emqx_ctl
+    \cp -rf /var/lib/emqx/emqx/lib/* /usr/lib/emqx/
+    ln -s /usr/lib/emqx/bin/emqx /usr/bin/emqx
+    ln -s /usr/lib/emqx/bin/emqx_ctl /usr/bin/emqx_ctl
 
     if [ -e /var/lib/emqx/emqx/init.script ] ; then
         \cp -rf /var/lib/emqx/emqx/init.script /etc/init.d/emqx
@@ -106,7 +106,7 @@ if [ "$1" = 0 ] ; then
         rm -rf /usr/lib/systemd/system/emqx.service
     fi
     rm -rf /etc/emqx/
-    rm -rf /usr/lib64/emqx/
+    rm -rf /usr/lib/emqx/
     rm -rf /usr/bin/emqx
     rm -rf /usr/bin/emqx_ctl
 
