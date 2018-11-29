@@ -62,10 +62,8 @@ if [ $1 = 0 ]; then
     if [ -e %{_initddir}/%{_name} ] ; then
         /sbin/service %{_name} stop > /dev/null 2>&1
         /sbin/chkconfig --del %{_name}
-        rm -f %{_initddir}/%{_name}
     else
         systemctl disable %{_name}.service
-        rm -f %{_unitdir}/%{_name}.service
     fi
     rm -f %{_bindir}/emqx
     rm -f %{_bindir}/emqx_ctl

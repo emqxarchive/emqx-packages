@@ -1,22 +1,22 @@
 # Keep this short to avoid bloating beam files with long file path info
-TOPDIR = /tmp/emqx
-SRCDIR = $(TOPDIR)/$(REL_VSN)
-BUILT = $(SRCDIR)/BUILT
-dash = -
+TOPDIR := /tmp/emqx
+SRCDIR := $(TOPDIR)/$(REL_VSN)
+BUILT := $(SRCDIR)/BUILT
+dash := -
 none :=
 space := $(none) # eol
-RPM_VSN = $(word 1,$(subst $(dash),$(space),$(REL_VSN:v%=%)))
-vsn_prefix = v$(RPM_VSN)-
-RPM_REL = $(REL_VSN:$(vsn_prefix)%=%)
+RPM_VSN := $(word 1,$(subst $(dash),$(space),$(REL_VSN:v%=%)))
+vsn_prefix := v$(RPM_VSN)-
+RPM_REL := $(REL_VSN:$(vsn_prefix)%=%)
 ifeq ($(RPM_REL),$(REL_VSN))
 	# no tail
-	RPM_REL = 1
+	RPM_REL := 1
 endif
 
-SYSTEMD = $(shell if command -v systemctl >/dev/null 2>&1; then echo yes; fi)
+SYSTEMD := $(shell if command -v systemctl >/dev/null 2>&1; then echo yes; fi)
 
-SERVICE_SRC = $(if $(SYSTEMD),$(shell pwd)/emqx.service,$(shell pwd)/init.script)
-SERVICE_DST = $(if $(SYSTEMD),%{_unitdir}/emqx.service,%{_initddir}/emqx)
+SERVICE_SRC := $(if $(SYSTEMD),$(shell pwd)/emqx.service,$(shell pwd)/init.script)
+SERVICE_DST := $(if $(SYSTEMD),%{_unitdir}/emqx.service,%{_initddir}/emqx)
 
 .PHONY: all
 all: | $(BUILT)
