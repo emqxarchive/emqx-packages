@@ -14,8 +14,10 @@ ifeq ($(RPM_REL),$(REL_VSN))
 endif
 
 SYSTEMD := $(shell if command -v systemctl >/dev/null 2>&1; then echo yes; fi)
+# Not $(PWD) as it does not work for make -C
+CURDIR := $(shell pwd)
 
-SERVICE_SRC := $(if $(SYSTEMD),$(shell pwd)/emqx.service,$(shell pwd)/init.script)
+SERVICE_SRC := $(if $(SYSTEMD),$(CURDIR)/emqx.service,$(CURDIR)/init.script)
 SERVICE_DST := $(if $(SYSTEMD),%{_unitdir}/emqx.service,%{_initddir}/emqx)
 
 .PHONY: all
@@ -29,6 +31,8 @@ all: | $(BUILT)
 		--define "_service_src $(SERVICE_SRC)" \
 		--define "_service_dst $(SERVICE_DST)" \
 		emqx.spec
+	mkdir $(CURDIR)/../package
+	mv $(TOPDIR)/RPMS/x86_64/*.rpm $(CURDIR)/../package/
 
 $(BUILT):
 	mkdir -p $(TOPDIR)
