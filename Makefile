@@ -38,7 +38,7 @@ endif  # linux
 
 ## Call platform dependent makefile
 ostype:clean
-	$(if $(PKGERDIR),,$(error "Operating system '$(OS)' not supported by emq_package"))
+	$(if $(PKGERDIR),,$(error "Operating system '$(OS)' not supported"))
 	cd $(PKGERDIR) && $(MAKE)
 
 clean:

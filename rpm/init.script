@@ -16,6 +16,7 @@ DESC="(Erlang MQTT Broker) is a distributed, massively scalable, highly extensib
 NAME=emqx
 DAEMON=/usr/bin/$NAME
 lockfile=/var/lock/subsys/$NAME
+mkdir -p /var/run/$NAME
 pidfile=/var/run/$NAME/$NAME.pid
 
 # Check for script, config and data dirs
@@ -36,8 +37,12 @@ fi
 status -p $pidfile -l $(basename $lockfile) $NAME >/dev/null 2>&1
 running=$?
 
+find_pid() {
+    ps ax | grep beam.smp | grep -E "\-progname.+$NAME" | awk '{print $1}'
+}
+
 check_pid_status() {
-    pid=$(ps ax | grep beam.smp | grep "\-progname $NAME" | awk '{print $1}')
+    local pid="$(find_pid)"
     if [ "$pid" = "" ]; then
         # prog not running?
         return 1
@@ -54,6 +59,7 @@ start() {
     RETVAL=$?
     if [ $RETVAL -eq 0 ]; then
         touch $lockfile
+        find_pid > $pidfile
         success
     else
         failure $"$NAME start"

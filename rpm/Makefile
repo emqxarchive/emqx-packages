@@ -41,7 +41,7 @@ all: | $(BUILT)
 
 $(BUILT):
 	mkdir -p $(TOPDIR)
-	git clone -b $(REL_TAG) https://github.com/emqx/emqx-rel $(SRCDIR)
+	if [ ! -d $(SRCDIR) ]; then git clone -b $(REL_TAG) https://github.com/emqx/emqx-rel $(SRCDIR); fi
 	cd $(SRCDIR) && VSN=$(REL_VSN) make && mkdir BUILT
 
 clean:
