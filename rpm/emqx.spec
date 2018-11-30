@@ -1,117 +1,83 @@
-%define __debug_install_post %{_rpmconfigdir}/find-debuginfo.sh %{?_find_debuginfo_opts} "%{_builddir}/%{?buildsubdir}" %{nil}
-Name:    emqx
-Version: 3.0
-Release: 1%{?dist}
+%define debug_package %{nil}
+%define _user %{_name}
+%define _group %{_name}
+%define _conf_dir %{_sysconfdir}/%{_name}
+%define _log_dir %{_var}/log/%{_name}
+%define _lib_home /usr/lib/%{_name}
+%define _var_home %{_sharedstatedir}/%{_name}
+
+Name: %{_name}
+Version: %{_version}
+Release: %{_release}%{?dist}
 Summary: emqx
-Group:   System Environment/Daemons
+Group: System Environment/Daemons
 License: Apache License Version 2.0
-URL:     http://www.emqtt.io
-Source0:    %{name}-%{version}.tar.gz
-BuildRoot:  %_topdir/BUILDROOT
-#BuildRequires: gcc,make
-#Requires:  pcre,pcre-devel,openssl,chkconfig
+URL: https://www.emqx.io
+BuildRoot: %{_tmppath}/%{_name}-%{_version}-root
+Provides: %{_name}
 
 %description
-(Erlang MQTT Broker) is a distributed, massively scalable, highly extensible MQTT message broker written in Erlang/OTP.
+EMQX, a distributed, massively scalable, highly extensible MQTT message broker written in Erlang/OTP.
 
 %prep
-%setup -q
 
 %build
-make %{?_smp_mflags}
 
 %install
-#make install DESTDIR=%{buildroot}
-%define relpath       %{_builddir}/%{buildsubdir}/_rel/emqx
-%define buildroot_lib %{buildroot}%{_libdir}/emqx
-%define buildroot_etc %{buildroot}%{_sysconfdir}/emqx
-%define buildroot_bin %{buildroot_lib}/bin
+mkdir -p %{buildroot}%{_lib_home}
+mkdir -p %{buildroot}%{_log_dir}
+mkdir -p %{buildroot}%{_unitdir}
+mkdir -p %{buildroot}%{_conf_dir}
+mkdir -p %{buildroot}%{_bindir}
+mkdir -p %{buildroot}%{_var_home}
 
-mkdir -p %{buildroot}%{_localstatedir}/lib/emqx
-mkdir -p %{buildroot}%{_localstatedir}/log/emqx
-mkdir -p %{buildroot}%{_localstatedir}/run/emqx
-mkdir -p %{buildroot}%{_localstatedir}/lib/emqx/emqx/lib
-mkdir -p %{buildroot}%{_localstatedir}/lib/emqx/emqx/lib/bin
-mkdir -p %{buildroot}%{_localstatedir}/lib/emqx/emqx/etc
-
-cp -R %{relpath}/lib      %{buildroot}%{_localstatedir}/lib/emqx/emqx/lib
-cp -R %{relpath}/erts-*   %{buildroot}%{_localstatedir}/lib/emqx/emqx/lib
-cp -R %{relpath}/releases %{buildroot}%{_localstatedir}/lib/emqx/emqx/lib
-
-cp %{relpath}/bin/*       %{buildroot}%{_localstatedir}/lib/emqx/emqx/lib/bin
-
-cp -R %{relpath}/etc/*    %{buildroot}%{_localstatedir}/lib/emqx/emqx/etc
-
-cp -R %{relpath}/data/*   %{buildroot}%{_localstatedir}/lib/emqx
-
-if command -v systemctl >/dev/null 2>&1; then
-    install -m755  %{_topdir}/emqx.service %{buildroot}%{_localstatedir}/lib/emqx/emqx/
-else
-    install -m755 %{_topdir}/init.script %{buildroot}%{_localstatedir}/lib/emqx/emqx/
-fi
+cp -R %{_reldir}/lib %{buildroot}%{_lib_home}/
+cp -R %{_reldir}/erts-* %{buildroot}%{_lib_home}/
+cp -R %{_reldir}/releases %{buildroot}%{_lib_home}/
+cp -R %{_reldir}/bin %{buildroot}%{_lib_home}/
+cp -R %{_reldir}/etc/* %{buildroot}%{_conf_dir}/
+cp -R %{_reldir}/data/* %{buildroot}%{_var_home}/
+install -m755 %{_service_src} %{buildroot}%{_service_dst}
 
 %pre
-# Pre-install script
-if ! getent group emqx >/dev/null 2>&1; then
-        groupadd -r emqx
-fi
-
-if getent passwd emqx >/dev/null 2>&1; then
-        usermod -d %{_localstatedir}/lib/emqx emqx || true
-else
-    useradd -r -g emqx \
-           --home %{_localstatedir}/lib/emqx \
-           --comment "emqx user" \
-           --shell /bin/bash \
-           emqx
+if [ $1 = 1 ]; then
+  # Initial installation
+  /usr/bin/getent group %{_group} >/dev/null || /usr/sbin/groupadd -r %{_group}
+  if ! /usr/bin/getent passwd %{_user} >/dev/null ; then
+      /usr/sbin/useradd -r -g %{_group} -m -d %{_sharedstatedir}/%{_name} -c "%{_name}" %{_user}
+  fi
 fi
 
 %post
-if [ $1 == 1 ];then
-    mkdir /usr/lib/emqx
-    mkdir /etc/emqx
-    \cp -rf /var/lib/emqx/emqx/etc/* /etc/emqx/
-    \cp -rf /var/lib/emqx/emqx/lib/* /usr/lib/emqx/
-    ln -s /usr/lib/emqx/bin/emqx /usr/bin/emqx
-    ln -s /usr/lib/emqx/bin/emqx_ctl /usr/bin/emqx_ctl
-
-    if [ -e /var/lib/emqx/emqx/init.script ] ; then
-        \cp -rf /var/lib/emqx/emqx/init.script /etc/init.d/emqx
-        chown root:root /etc/init.d/emqx
-        sbin/chkconfig --add emqx
-    else
-        \cp -rf /var/lib/emqx/emqx/emqx.service /usr/lib/systemd/system/emqx.service
-        systemctl enable emqx.service
-    fi
-    chown -R emqx:emqx /var/log/emqx/
-    chown -R emqx:emqx /var/lib/emqx/
+if [ $1 = 1 ]; then
+    ln -s %{_lib_home}/bin/emqx %{_bindir}/emqx
+    ln -s %{_lib_home}/bin/emqx_ctl %{_bindir}/emqx_ctl
 fi
-
+%systemd_post %{_name}.service
 
 %preun
-# Pre-uninstall script
-
+%systemd_preun %{_name}.service
 # Only on uninstall, not upgrades
-if [ "$1" = 0 ] ; then
-    if [ -e /etc/init.d/emqx ] ; then
-        /sbin/service emqx stop > /dev/null 2>&1
-        /sbin/chkconfig --del emqx
-        rm -f /etc/init.d/emqx
+if [ $1 = 0 ]; then
+    if [ -e %{_initddir}/%{_name} ] ; then
+        /sbin/service %{_name} stop > /dev/null 2>&1
+        /sbin/chkconfig --del %{_name}
     else
-        systemctl disable emqx.service
-        rm -f /usr/lib/systemd/system/emqx.service
+        systemctl disable %{_name}.service
     fi
-    rm -rf /usr/lib/emqx/
-    rm -f /usr/bin/emqx
-    rm -f /usr/bin/emqx_ctl
-
+    rm -f %{_bindir}/emqx
+    rm -f %{_bindir}/emqx_ctl
 fi
 exit 0
 
 %files
 %defattr(-,root,root)
-/var/ 
-%doc
+%{_service_dst}
+%{_lib_home}
+%attr(0700,%{_user},%{_group}) %dir %{_var_home}
+%attr(0700,%{_user},%{_group}) %config(noreplace) %{_var_home}/*
+%attr(0755,%{_user},%{_group}) %dir %{_log_dir}
+%attr(0755,%{_user},%{_group}) %config(noreplace) %{_conf_dir}/*
 
 %clean
 rm -rf %{buildroot}
