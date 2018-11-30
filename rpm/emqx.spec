@@ -30,6 +30,7 @@ mkdir -p %{buildroot}%{_unitdir}
 mkdir -p %{buildroot}%{_conf_dir}
 mkdir -p %{buildroot}%{_bindir}
 mkdir -p %{buildroot}%{_var_home}
+mkdir -p %{buildroot}%{_initddir}
 
 cp -R %{_reldir}/lib %{buildroot}%{_lib_home}/
 cp -R %{_reldir}/erts-* %{buildroot}%{_lib_home}/
