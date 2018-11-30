@@ -3,7 +3,7 @@
 # emqx
 #
 # chkconfig: 2345 80 30
-# description: (Erlang MQTT Broker) is a distributed, massively scalable, highly extensible MQTT message broker written in Erlang/OTP
+# description: EMQX, a distributed, massively scalable, highly extensible MQTT message broker written in Erlang/OTP
 # processname: beam
 #
 

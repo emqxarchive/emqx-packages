@@ -43,6 +43,7 @@ ostype:clean
 
 clean:
 	rm -rf package
+	make -C rpm clean
 
 .PHONY: rpm
 rpm:

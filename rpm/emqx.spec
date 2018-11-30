@@ -54,10 +54,10 @@ if [ $1 = 1 ]; then
     ln -s %{_lib_home}/bin/emqx %{_bindir}/emqx
     ln -s %{_lib_home}/bin/emqx_ctl %{_bindir}/emqx_ctl
 fi
-%systemd_post %{_name}.service
+%{_post_addition}
 
 %preun
-%systemd_preun %{_name}.service
+%{_preun_addition}
 # Only on uninstall, not upgrades
 if [ $1 = 0 ]; then
     if [ -e %{_initddir}/%{_name} ] ; then

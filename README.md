@@ -19,7 +19,7 @@ Build on Linux Centos/Redhat
 ```
 yum install rpm-build
 make
-sudo rpm -ivh emqx-${EMQX_VERSION}-1.el7.centos.x86_64.rpm
+sudo rpm -ivh emqx-${EMQX_VERSION}-1.el7.x86_64.rpm
 ```
 
 License
