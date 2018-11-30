@@ -1,5 +1,7 @@
 deb: clean package
 
+DEB_VSN ?= $(shell echo $(PKG_VSN) | grep -oE "[0-9]+\.[0-9]+(\.[0-9]+)?")
+
 prepare:
 	mkdir -p emqx-$(PKG_VSN)
 	git clone -b $(REL_TAG) https://github.com/emqx/emqx-rel emqx-$(PKG_VSN)
@@ -8,7 +10,7 @@ prepare:
 
 package: prepare
 	mkdir -p ../package
-	cp emqx_$(PKG_VSN)_*.deb ../package
+	cp emqx_$(DEB_VSN)_*.deb ../package
 	rm -rf emqx*
 clean:
 	rm -rf emqx*
