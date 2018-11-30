@@ -6,7 +6,7 @@
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
 # Short-Description: Erlang MQTT Broker
-# Description:       (Erlang MQTT Broker) is a distributed, massively scalable, highly extensible MQTT message broker written in Erlang/OTP
+# Description:       EMQX, a distributed, massively scalable, highly extensible MQTT message broker written in Erlang/OT
 ### END INIT INFO
 
 NAME=emqx

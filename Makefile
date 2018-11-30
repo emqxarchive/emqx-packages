@@ -1,12 +1,16 @@
 export
 
-OS            = $(shell uname -s)
-EMQX_VERSION  = 3.0
-# tag or branch to clone emqx-rel project
-REL_TAG       = emqx30_release
-# tag for all emqx-rel dependencies
-REL_VSN       = v3.0-rc.4
-REL_PROFILE   = pkg
+OS = $(shell uname -s)
+REL_PROFILE ?= pkg
+# The version-release used for package
+PKG_VSN ?= 3.0
+# Tag or branch to clone emqx-rel project
+REL_TAG ?= emqx30
+# Default tag for all emqx-rel dependencies
+EMQX_DEPS_DEFAULT_VSN ?= emqx30
+# Override the default
+# emqx_vsn = v3.0.0
+#
 ##
 ## Support RPM and Debian based linux systems
 ##
@@ -44,6 +48,10 @@ ostype:clean
 clean:
 	rm -rf package
 	make -C rpm clean
+
+.PHONY: deb
+deb:
+	make -C deb
 
 .PHONY: rpm
 rpm:

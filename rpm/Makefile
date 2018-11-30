@@ -1,14 +1,14 @@
 # Keep this short to avoid bloating beam files with long file path info
 TOPDIR := /tmp/emqx
-SRCDIR := $(TOPDIR)/$(REL_VSN)
+SRCDIR := $(TOPDIR)/$(PKG_VSN)
 BUILT := $(SRCDIR)/BUILT
 dash := -
 none :=
 space := $(none) # eol
-RPM_VSN := $(word 1,$(subst $(dash),$(space),$(REL_VSN:v%=%)))
-vsn_prefix := v$(RPM_VSN)-
-RPM_REL := $(REL_VSN:$(vsn_prefix)%=%)
-ifeq ($(RPM_REL),$(REL_VSN))
+RPM_VSN ?= $(shell echo $(PKG_VSN) | grep -oE "[0-9]+\.[0-9]+(\.[0-9]+)?")
+RPM_REL ?= $(shell echo $(PKG_VSN) | grep -oE "(alpha|beta|rc)\.[0-9]")
+
+ifeq ($(RPM_REL),)
 	# no tail
 	RPM_REL := 1
 endif
@@ -42,7 +42,7 @@ all: | $(BUILT)
 $(BUILT):
 	mkdir -p $(TOPDIR)
 	if [ ! -d $(SRCDIR) ]; then git clone -b $(REL_TAG) https://github.com/emqx/emqx-rel $(SRCDIR); fi
-	cd $(SRCDIR) && VSN=$(REL_VSN) make && mkdir BUILT
+	cd $(SRCDIR) && make && mkdir BUILT
 
 clean:
 	rm -rf $(SRCDIR)
