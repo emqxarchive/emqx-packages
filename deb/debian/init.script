@@ -10,7 +10,7 @@
 ### END INIT INFO
 
 NAME=emqx
-DAEMON=/usr/sbin/$NAME
+DAEMON=/usr/bin/$NAME
 SCRIPTNAME=/etc/init.d/$NAME
 
 # Read configuration variable file if it is present

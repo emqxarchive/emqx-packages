@@ -2,7 +2,10 @@ export
 
 OS            = $(shell uname -s)
 EMQX_VERSION  = 3.0
-REL_TAG       = emqx30_package
+# tag or branch to clone emqx-rel project
+REL_TAG       = emqx30_release
+# tag for all emqx-rel dependencies
+REL_VSN       = v3.0-rc.4
 REL_PROFILE   = pkg
 ##
 ## Support RPM and Debian based linux systems
@@ -35,8 +38,13 @@ endif  # linux
 
 ## Call platform dependent makefile
 ostype:clean
-	$(if $(PKGERDIR),,$(error "Operating system '$(OS)' not supported by emq_package"))
+	$(if $(PKGERDIR),,$(error "Operating system '$(OS)' not supported"))
 	cd $(PKGERDIR) && $(MAKE)
 
 clean:
 	rm -rf package
+	make -C rpm clean
+
+.PHONY: rpm
+rpm:
+	make -C rpm
