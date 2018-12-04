@@ -35,6 +35,7 @@ all: | $(BUILT)
 		--define "_service_dst $(SERVICE_DST)" \
 		--define "_post_addition $(POST_ADDITION)" \
 		--define "_preun_addition $(PREUN_ADDITION)" \
+		--define "_ostype $(ostype)" \
 		emqx.spec
 	mkdir -p $(CURDIR)/../package
 	cp $(TOPDIR)/RPMS/x86_64/*.rpm $(CURDIR)/../package/
