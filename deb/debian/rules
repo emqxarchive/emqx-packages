@@ -17,6 +17,7 @@ export DH_VERBOSE=1
 ## the generate command EXECUTES in rel/
 build:
 	make
+
 clean:
 	dh_clean
 	rm -f build

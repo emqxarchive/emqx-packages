@@ -4,7 +4,7 @@ SRCDIR := $(TOPDIR)/$(PKG_VSN)
 BUILT := $(SRCDIR)/BUILT
 dash := -
 none :=
-space := $(none) # eol
+space := $(none) $(none)
 RPM_VSN ?= $(shell echo $(PKG_VSN) | grep -oE "[0-9]+\.[0-9]+(\.[0-9]+)?")
 RPM_REL ?= $(shell echo $(PKG_VSN) | grep -oE "(alpha|beta|rc)\.[0-9]")
 
@@ -23,6 +23,12 @@ SERVICE_DST := $(if $(SYSTEMD),%{_unitdir}/emqx.service,%{_initddir}/emqx)
 POST_ADDITION := $(if $(SYSTEMD),%systemd_post %{_name}.service,echo post)
 PREUN_ADDITION := $(if $(SYSTEMD),%systemd_preun %{_name}.service,echo preun)
 
+ifndef ostype
+	OSTYPE := $(none)
+else
+	OSTYPE := -$(ostype)
+endif
+
 .PHONY: all
 all: | $(BUILT)
 	rpmbuild -v -bb \
@@ -35,6 +41,7 @@ all: | $(BUILT)
 		--define "_service_dst $(SERVICE_DST)" \
 		--define "_post_addition $(POST_ADDITION)" \
 		--define "_preun_addition $(PREUN_ADDITION)" \
+		--define "_ostype $(OSTYPE)" \
 		emqx.spec
 	mkdir -p $(CURDIR)/../package
 	cp $(TOPDIR)/RPMS/x86_64/*.rpm $(CURDIR)/../package/

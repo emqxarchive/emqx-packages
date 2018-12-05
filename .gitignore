@@ -10,3 +10,5 @@ rel/example_project
 .rebar
 .vscode
 package/
+*.rpm
+*.deb

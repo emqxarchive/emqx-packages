@@ -10,7 +10,7 @@ Build on Linux Debian/Ubuntu
 
 ```
 make
-sudo dpkg -i emqx_${PKG_VSN}_amd64.deb
+sudo dpkg -i emqx-${PKG_VSN}-amd64.deb
 ```
 
 Build on Linux Centos/Redhat
@@ -19,7 +19,7 @@ Build on Linux Centos/Redhat
 ```
 yum install rpm-build
 make
-sudo rpm -ivh emqx-${PKG_VSN}-1.el7.centos.x86_64.rpm
+sudo rpm -ivh emqx-${PKG_VSN}-1.el7.x86_64.rpm
 ```
 
 Build version other than default defined in Makefile
@@ -28,6 +28,7 @@ Build version other than default defined in Makefile
 ```
 export PKG_VSN=<version>
 export REL_TAG=<tag-or-branch>
+export EMQX_DEPS_DEFAULT_VSN=<tag-or-branch>
 make
 ```
 

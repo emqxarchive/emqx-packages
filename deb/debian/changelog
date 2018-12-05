@@ -1,5 +1,5 @@
-emqx (3.0) unstable; urgency=medium
+emqx (<VERSION>) unstable; urgency=medium
 
-  * Initial Release.
+  * See github commit history: https://github.com/emqx/emqx
 
- -- emqx <contact@emqtt.io>  Fri, 06 Jan 2017 10:48:42 +0800
+ -- emqx <contact@emqx.io>  <DATETIME>

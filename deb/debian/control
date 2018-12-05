@@ -1,12 +1,12 @@
 Source: emqx
 Section: unknown
 Priority: optional
-Maintainer: emqtt <emqtt@emqtt.io>
+Maintainer: emqx <contact@emqx.io>
 Build-Depends: debhelper (>=9)
 Standards-Version: 3.9.6
-Homepage: http://www.emqtt.io
+Homepage: https://www.emqx.io
 
 Package: emqx
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: Erlang MQTT Broker
+Description: EMQX, a distributed, massively scalable, highly extensible MQTT message broker written in Erlang/OTP
