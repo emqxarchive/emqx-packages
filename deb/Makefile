@@ -12,7 +12,7 @@ endif
 
 ARCH := $(shell dpkg --print-architecture)
 SOURCE_PKG := emqx_$(DEB_VSN)_$(ARCH)
-TARGET_PKG := emqx$(ostype)-$(PKG_VSN)_$(ARCH)
+TARGET_PKG := emqx-$(ostype)-$(PKG_VSN)-$(ARCH)
 
 .PHONY: all
 all: | $(BUILT)
