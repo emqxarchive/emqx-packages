@@ -10,7 +10,7 @@ Build on Linux Debian/Ubuntu
 
 ```
 make
-sudo dpkg -i emqx-${PKG_VSN}_amd64.deb
+sudo dpkg -i emqx-${PKG_VSN}-amd64.deb
 ```
 
 Build on Linux Centos/Redhat
