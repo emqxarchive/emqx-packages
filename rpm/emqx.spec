@@ -5,8 +5,7 @@
 %define _log_dir %{_var}/log/%{_name}
 %define _lib_home /usr/lib/%{_name}
 %define _var_home %{_sharedstatedir}/%{_name}
-%define _dist %(bash -c "echo %{dist} | cut -d'.' -f2")
-%define _build_name_fmt %{_arch}/%{_name}%{?_ostype}-v%{_version}-%{_release}.%{_dist}.%{_arch}.rpm
+%define _build_name_fmt %{_arch}/%{_name}%{?_ostype}-v%{_version}-%{_release}.%{_arch}.rpm
 
 Name: %{_name}
 Version: %{_version}
