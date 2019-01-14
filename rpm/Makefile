@@ -8,9 +8,18 @@ space := $(none) $(none)
 RPM_VSN ?= $(shell echo $(PKG_VSN) | grep -oE "[0-9]+\.[0-9]+(\.[0-9]+)?")
 RPM_REL ?= $(shell echo $(PKG_VSN) | grep -oE "(alpha|beta|rc)\.[0-9]")
 
+ifndef ostype
+	OSTYPE := $(none)
+else
+	OSTYPE := -$(ostype)
+endif
+
+SOURCE_PKG := emqx-$(OSTYPE)-v$(RPM_VSN)-$(RPM_REL).x86_64
+TARGET_PKG := ${EMQX_NAME}-$(OSTYPE)-v$(RPM_VSN)-$(RPM_REL).x86_64
 ifeq ($(RPM_REL),)
 	# no tail
 	RPM_REL := 1
+	TARGET_PKG := ${EMQX_NAME}-$(OSTYPE)-v$(RPM_VSN).x86_64
 endif
 
 SYSTEMD := $(shell if command -v systemctl >/dev/null 2>&1; then echo yes; fi)
@@ -23,16 +32,10 @@ SERVICE_DST := $(if $(SYSTEMD),%{_unitdir}/emqx.service,%{_initddir}/emqx)
 POST_ADDITION := $(if $(SYSTEMD),%systemd_post %{_name}.service,echo post)
 PREUN_ADDITION := $(if $(SYSTEMD),%systemd_preun %{_name}.service,echo preun)
 
-ifndef ostype
-	OSTYPE := $(none)
-else
-	OSTYPE := -$(ostype)
-endif
-
 .PHONY: all
 all: | $(BUILT)
 	rpmbuild -v -bb \
-		--define "_name $(EMQX_NAME)" \
+		--define "_name emqx" \
 		--define "_topdir $(TOPDIR)" \
 		--define "_version $(RPM_VSN)" \
 		--define "_reldir $(SRCDIR)/_rel/emqx" \
@@ -44,7 +47,7 @@ all: | $(BUILT)
 		--define "_ostype $(OSTYPE)" \
 		emqx.spec
 	mkdir -p $(CURDIR)/../package
-	cp $(TOPDIR)/RPMS/x86_64/*.rpm $(CURDIR)/../package/
+	cp $(TOPDIR)/RPMS/x86_64/$(SOURCE_PKG).rpm $(CURDIR)/../package/$(TARGET_PKG).rpm
 
 $(BUILT):
 	mkdir -p $(TOPDIR)
