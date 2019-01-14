@@ -4,10 +4,10 @@ SRCDIR := $(TOPDIR)/$(PKG_VSN)
 BUILT := $(SRCDIR)/BUILT
 DEB_VSN := $(PKG_VSN:v%=%)
 
-ifndef ostype
+ifndef OSTYPE
 	OSTYPE := $(none)
 else
-	OSTYPE := -$(ostype)
+	OSTYPE := -$(OSTYPE)
 endif
 
 ARCH := $(shell dpkg --print-architecture)

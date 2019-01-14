@@ -8,19 +8,19 @@ space := $(none) $(none)
 RPM_VSN ?= $(shell echo $(PKG_VSN) | grep -oE "[0-9]+\.[0-9]+(\.[0-9]+)?")
 RPM_REL ?= $(shell echo $(PKG_VSN) | grep -oE "(alpha|beta|rc)\.[0-9]")
 
-ifndef ostype
+ifndef OSTYPE
 	OSTYPE := $(none)
 else
-	OSTYPE := -$(ostype)
+	OSTYPE := -$(OSTYPE)
 endif
 
-SOURCE_PKG := emqx-$(OSTYPE)-v$(RPM_VSN)-$(RPM_REL).x86_64
-TARGET_PKG := ${EMQX_NAME}-$(OSTYPE)-v$(RPM_VSN)-$(RPM_REL).x86_64
+TARGET_PKG := ${EMQX_NAME}$(OSTYPE)-v$(RPM_VSN)-$(RPM_REL).x86_64
 ifeq ($(RPM_REL),)
 	# no tail
 	RPM_REL := 1
-	TARGET_PKG := ${EMQX_NAME}-$(OSTYPE)-v$(RPM_VSN).x86_64
+	TARGET_PKG := ${EMQX_NAME}$(OSTYPE)-v$(RPM_VSN).x86_64
 endif
+SOURCE_PKG := emqx$(OSTYPE)-v$(RPM_VSN)-$(RPM_REL).x86_64
 
 SYSTEMD := $(shell if command -v systemctl >/dev/null 2>&1; then echo yes; fi)
 # Not $(PWD) as it does not work for make -C
