@@ -32,7 +32,7 @@ endif
 .PHONY: all
 all: | $(BUILT)
 	rpmbuild -v -bb \
-		--define "_name emqx" \
+		--define "_name $(EMQX_NAME)" \
 		--define "_topdir $(TOPDIR)" \
 		--define "_version $(RPM_VSN)" \
 		--define "_reldir $(SRCDIR)/_rel/emqx" \

@@ -8,6 +8,8 @@ PKG_VSN ?= 3.0
 REL_TAG ?= emqx30
 # Default tag for all emqx-rel dependencies
 EMQX_DEPS_DEFAULT_VSN ?= emqx30
+# Default name
+EMQX_NAME ?= emqx
 # Override the default
 # emqx_vsn = v3.0.0
 #
