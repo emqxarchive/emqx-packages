@@ -4,15 +4,15 @@ SRCDIR := $(TOPDIR)/$(PKG_VSN)
 BUILT := $(SRCDIR)/BUILT
 DEB_VSN := $(PKG_VSN:v%=%)
 
-ifndef OS
-	OS := $(none)
+ifndef SYSTEM
+	SYSTEM := $(none)
 else
-	OS := -$(OS)
+	SYSTEM := -$(SYSTEM)
 endif
 
 ARCH := $(shell dpkg --print-architecture)
 SOURCE_PKG := emqx_$(DEB_VSN)_$(ARCH)
-TARGET_PKG := ${EMQX_NAME}$(OS)-$(PKG_VSN)_$(ARCH)
+TARGET_PKG := $(EMQX_NAME)$(SYSTEM)-$(PKG_VSN)_$(ARCH)
 
 .PHONY: all
 all: | $(BUILT)
