@@ -56,6 +56,11 @@ if [ $1 = 1 ]; then
     ln -s %{_lib_home}/bin/emqx_ctl %{_bindir}/emqx_ctl
 fi
 %{_post_addition}
+if [ -e %{_initddir}/%{_name} ] ; then
+    /sbin/chkconfig --add %{_name}
+else
+    systemctl enable %{_name}.service
+fi
 
 %preun
 %{_preun_addition}
