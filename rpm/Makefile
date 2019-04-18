@@ -45,6 +45,7 @@ all: | $(BUILT)
 		--define "_post_addition $(POST_ADDITION)" \
 		--define "_preun_addition $(PREUN_ADDITION)" \
 		--define "_ostype $(SYSTEM)" \
+		--define "_sharedstatedir /var/lib" \
 		emqx.spec
 	mkdir -p $(CURDIR)/../package
 	cp $(TOPDIR)/RPMS/x86_64/$(SOURCE_PKG).rpm $(CURDIR)/../package/$(TARGET_PKG).rpm
