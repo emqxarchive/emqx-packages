@@ -20,7 +20,7 @@ ifeq ($(RPM_REL),)
 	RPM_REL := 1
 	TARGET_PKG := $(EMQX_NAME)$(SYSTEM)-v$(RPM_VSN).x86_64
 endif
-SOURCE_PKG := emqx$(SYSTEM)-v$(RPM_VSN)-$(RPM_REL).x86_64
+SOURCE_PKG := emq$(SYSTEM)-v$(RPM_VSN)-$(RPM_REL).x86_64
 
 SYSTEMD := $(shell if command -v systemctl >/dev/null 2>&1; then echo yes; fi)
 # Not $(PWD) as it does not work for make -C
@@ -42,6 +42,7 @@ EMQX_BUILD := $(shell \
 .PHONY: all
 all: | $(BUILT)
 	rpmbuild -v -bb \
+		--define "_package_name $(EMQX_NAME)" \
 		--define "_name emqx" \
 		--define "_topdir $(TOPDIR)" \
 		--define "_version $(RPM_VSN)" \

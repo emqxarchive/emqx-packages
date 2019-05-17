@@ -7,7 +7,7 @@
 %define _var_home %{_sharedstatedir}/%{_name}
 %define _build_name_fmt %{_arch}/%{_name}%{?_ostype}-v%{_version}-%{_release}.%{_arch}.rpm
 
-Name: %{_name}
+Name: %{_package_name}
 Version: %{_version}
 Release: %{_release}%{?dist}
 Summary: emqx
