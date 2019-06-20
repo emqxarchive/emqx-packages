@@ -21,7 +21,7 @@ build:
 clean:
 	dh_clean
 	rm -f build
-	make clean
+	# make clean
 
 ## dh_shlibdeps was added to figure out the dependencies on shared libraries
 ##   and will populate the ${shlibs:Depends} callout in the control file
