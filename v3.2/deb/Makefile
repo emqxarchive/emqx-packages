@@ -30,7 +30,7 @@ all: | $(BUILT)
 
 $(BUILT):
 	mkdir -p $(TOPDIR)
-	if [ ! -z $(EMQX_REL_CODE) ] && [ -d $(EMQX_REL_CODE) ]; then mkdir $(SRCDIR) && cp -r $(EMQX_REL_CODE)/* $(SRCDIR); fi
+	if [ ! -z $(EMQX_REL) ] && [ -d $(EMQX_REL) ]; then mkdir $(SRCDIR) && cp -r $(EMQX_REL)/* $(SRCDIR); fi
 	if [ ! -d $(SRCDIR) ]; then git clone -b $(REL_TAG) https://github.com/emqx/emqx-rel $(SRCDIR); fi
 	# cd $(SRCDIR) && make distclean && make $(EMQX_NAME)_pkg && mkdir BUILT
 
